@@ -1,0 +1,16 @@
+services:
+    proxy:
+        image: mitmproxy/mitmproxy
+        volumes:
+            - ./dockermnt:/outputDir
+        ports:
+            - 9091:9091
+        command: mitmdump --mode "SOCKS5" --listen-port 9091 --set block_global=false -w outputDir/out.mitmlog --set hardump=outputDir/outDump.har
+    
+    selenium-firefox:
+        image: selenium/standalone-firefox
+        ports:
+            - 7900 
+            - 4444
+        shm_size: "2g"
+    
